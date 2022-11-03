@@ -5,8 +5,8 @@
 #include maps\mp\gametypes\_gamelogic;
 
 /*
-    Plutonium IW6 Mapvote
-    Developed by DoktorSAS
+	Plutonium IW6 Mapvote
+	Developed by DoktorSAS
 	Version: v1.0.0
 
 	1.0.0:
@@ -16,25 +16,25 @@
 
 init()
 {
-    preCacheShader("gradient_fadein");
-    preCacheShader("gradient");
-    preCacheShader("white");
-    preCacheShader("line_vertical");
+	preCacheShader("gradient_fadein");
+	preCacheShader("gradient");
+	preCacheShader("white");
+	preCacheShader("line_vertical");
 
-    level thread onPlayerConnected();
+	level thread onPlayerConnected();
 	level thread mv_Config();
 
-    level.startmapvote = ::startMapvote;
+	level.startmapvote = ::startMapvote;
 }
 
 startMapvote()
 {
-    if(wasLastRound())
-    {
-        mv_Begin();
-    }
+	if (wasLastRound())
+	{
+		mv_Begin();
+	}
 }
-    
+
 mv_Config()
 {
 	SetDvarIfNotInizialized("mv_enable", 1);
@@ -46,7 +46,6 @@ mv_Config()
 	level.__mapvote["time"] = getDvarInt("mv_time");
 	SetDvarIfNotInizialized("mv_maps", "mp_prisonbreak mp_dart mp_lonestar mp_frag mp_snow mp_fahrenheit mp_hashima mp_warhawk mp_sovereign mp_zebra mp_skeleton mp_chasm mp_flooded mp_strikezone mp_descent_new mp_dome_ns mp_ca_impact mp_ca_behemoth mp_battery3 mp_dig mp_favela_iw6 mp_pirate mp_conflict mp_mine mp_shipment_ns mp_zerosub mp_boneyard_ns mp_ca_red_river mp_ca_rumble mp_swamp");
 
-
 	SetDvarIfNotInizialized("mv_credits", 1);
 	SetDvarIfNotInizialized("mv_socials", 1);
 	SetDvarIfNotInizialized("mv_socialname", "Discord");
@@ -57,7 +56,7 @@ mv_Config()
 	SetDvarIfNotInizialized("mv_scrollcolor", "cyan");
 	SetDvarIfNotInizialized("mv_selectcolor", "lightgreen");
 	SetDvarIfNotInizialized("mv_backgroundcolor", "grey");
-	SetDvarIfNotInizialized("mv_gametypes", "dm;dm.cfg war;war.cfg sd;sd.cfg");
+	SetDvarIfNotInizialized("mv_gametypes", "dm;dm.cfg tdm;tdm.cfg dm;dm.cfg tdm;tdm.cfg sd;sd.cfg sd;sd.cfg");
 	setDvarIfNotInizialized("mv_excludedmaps", "");
 }
 
@@ -77,23 +76,23 @@ mv_Begin()
 		mapsIDs = strTok(getDvar("mv_maps"), " ");
 		mapschoosed = mv_GetRandomMaps(mapsIDs);
 
-        level.__mapvote["map1"] = spawnStruct();
-        level.__mapvote["map2"] = spawnStruct();
-        level.__mapvote["map3"] = spawnStruct();
+		level.__mapvote["map1"] = spawnStruct();
+		level.__mapvote["map2"] = spawnStruct();
+		level.__mapvote["map3"] = spawnStruct();
 
-        level.__mapvote["map1"].mapname = maptoname(mapschoosed[0]);
-        level.__mapvote["map1"].mapid = mapschoosed[0];
-        level.__mapvote["map2"].mapname = maptoname(mapschoosed[1]);
-        level.__mapvote["map2"].mapid = mapschoosed[1];
-        level.__mapvote["map3"].mapname = maptoname(mapschoosed[2]);
-        level.__mapvote["map3"].mapid = mapschoosed[2];
+		level.__mapvote["map1"].mapname = maptoname(mapschoosed[0]);
+		level.__mapvote["map1"].mapid = mapschoosed[0];
+		level.__mapvote["map2"].mapname = maptoname(mapschoosed[1]);
+		level.__mapvote["map2"].mapid = mapschoosed[1];
+		level.__mapvote["map3"].mapname = maptoname(mapschoosed[2]);
+		level.__mapvote["map3"].mapid = mapschoosed[2];
 
-        gametypes = strTok(getDvar("mv_gametypes"), " ");
+		gametypes = strTok(getDvar("mv_gametypes"), " ");
 		g1 = gametypes[randomIntRange(0, gametypes.size)];
 		g2 = gametypes[randomIntRange(0, gametypes.size)];
 		g3 = gametypes[randomIntRange(0, gametypes.size)];
 
-        level.__mapvote["map1"].gametype = g1;
+		level.__mapvote["map1"].gametype = g1;
 		level.__mapvote["map2"].gametype = g2;
 		level.__mapvote["map3"].gametype = g3;
 
@@ -111,28 +110,28 @@ mv_Begin()
 
 ArrayRemoveIndex(array, index)
 {
-    new_array = [];
-    for(i = 0; i < array.size ;i++)
-    {
-        if(i != index)
-            new_array[new_array.size] = array[i];
-    }
-    array = new_array;
-    return new_array;
+	new_array = [];
+	for (i = 0; i < array.size; i++)
+	{
+		if (i != index)
+			new_array[new_array.size] = array[i];
+	}
+	array = new_array;
+	return new_array;
 }
 
 mv_GetRandomMaps(mapsIDs) // Select random map from the list
 {
-    mapschoosed = [];
-    for (i = 0; i < 3; i++)
+	mapschoosed = [];
+	for (i = 0; i < 3; i++)
 	{
-        index = randomIntRange(0, mapsIDs.size);
+		index = randomIntRange(0, mapsIDs.size);
 		map = mapsIDs[index];
 		mapsIDs = ArrayRemoveIndex(mapsIDs, map);
 		mapschoosed[i] = map;
-    }
+	}
 
-    return mapschoosed;  
+	return mapschoosed;
 }
 
 is_bot(entity) // Check if a players is a bot
@@ -149,7 +148,7 @@ mv_PlayerUI()
 
 	scroll_color = getColor(getDvar("mv_scrollcolor"));
 	bg_color = getColor(getDvar("mv_backgroundcolor"));
-	self freezeControlsWrapper( 1 );
+	self freezeControlsWrapper(1);
 	boxes = [];
 	boxes[0] = self createRectangle("center", "center", -220, -452, 205, 133, scroll_color, "white", 1, .7);
 	boxes[1] = self createRectangle("center", "center", 0, -452, 205, 133, bg_color, "white", 1, .7);
@@ -312,7 +311,6 @@ mv_VoteManager()
 		}
 	}
 
-
 	winner = mv_GetMostVotedMap(votes);
 	map = winner.map;
 	mv_SetRotation(map.mapid, map.gametype);
@@ -363,8 +361,7 @@ mv_ServerUI()
 	mapUI2 = level createString("^7" + level.__mapvote["map2"].mapname + "\n" + gametypeToName(strTok(level.__mapvote["map2"].gametype, ";")[0]), "objective", 1.1, "center", "center", 0, -325, (1, 1, 1), 1, (0, 0, 0), 0.5, 5, 1);
 	mapUI3 = level createString("^7" + level.__mapvote["map3"].mapname + "\n" + gametypeToName(strTok(level.__mapvote["map3"].gametype, ";")[0]), "objective", 1.1, "center", "center", 220, -325, (1, 1, 1), 1, (0, 0, 0), 0.5, 5, 1);
 
-
-    mapUIBTXT1 = level createRectangle("center", "center", -220, 0, 205, 32, (1, 1, 1), "black", 3, 0, 1);
+	mapUIBTXT1 = level createRectangle("center", "center", -220, 0, 205, 32, (1, 1, 1), "black", 3, 0, 1);
 	mapUIBTXT2 = level createRectangle("center", "center", 0, 0, 205, 32, (1, 1, 1), "black", 3, 0, 1);
 	mapUIBTXT3 = level createRectangle("center", "center", 220, 0, 205, 32, (1, 1, 1), "black", 3, 0, 1);
 
@@ -405,8 +402,8 @@ mv_ServerUI()
 	mapUIBTXT1 affectElement("alpha", 0.5, 0);
 	mapUIBTXT2 affectElement("alpha", 0.5, 0);
 	mapUIBTXT3 affectElement("alpha", 0.5, 0);
-	//arrow_right affectElement("alpha", 0.5, 0);
-	//arrow_left affectElement("alpha", 0.5, 0);
+	// arrow_right affectElement("alpha", 0.5, 0);
+	// arrow_left affectElement("alpha", 0.5, 0);
 	timer affectElement("alpha", 0.5, 0);
 
 	foreach (player in level.players)
@@ -435,328 +432,387 @@ FixBlur() // Patch blur effect
 
 main()
 {
-	//replacefunc do not work as intended once patched remove // in front of one of the next 2 lines
+	// replacefunc do not work as intended once patched remove // in front of one of the next 2 lines
 
-	//replacefunc( maps\mp\gametypes\_gamelogic::endgame_regularmp, ::stub_endgame_regularmp);
-	//replacefunc( getfunction("maps/mp/gametypes/_gamelogic", "endgame_regularmp"), ::stub_endgame_regularmp);
+	// replacefunc( maps\mp\gametypes\_gamelogic::endgame_regularmp, ::stub_endgame_regularmp);
+	// replacefunc( getfunction("maps/mp/gametypes/_gamelogic", "endgame_regularmp"), ::stub_endgame_regularmp);
 }
 
-endstub_endgame_regularmpgame_regularmp( var_0, var_1, var_2 )
+endstub_endgame_regularmpgame_regularmp(var_0, var_1, var_2)
 {
-    if ( !isdefined( var_2 ) )
-        var_2 = 0;
+	if (!isdefined(var_2))
+		var_2 = 0;
 
-    if ( game["state"] == "postgame" || level.gameended && ( !isdefined( level.gtnw ) || !level.gtnw ) )
-        return;
+	if (game["state"] == "postgame" || level.gameended && (!isdefined(level.gtnw) || !level.gtnw))
+		return;
 
-    setomnvar( "ui_pause_menu_show", 0 );
-    game["state"] = "postgame";
-    setdvar( "ui_game_state", "postgame" );
-    level.gameendtime = gettime();
-    level.gameended = 1;
-    level.ingraceperiod = 0;
-    level notify( "game_ended", var_0 );
-    maps\mp\_utility::levelflagset( "game_over" );
-    maps\mp\_utility::levelflagset( "block_notifies" );
-    common_scripts\utility::waitframe();
-    setgameendtime( 0 );
-    var_3 = getmatchdata( "gameLength" );
-    var_3 += int( maps\mp\_utility::getsecondspassed() );
-    setmatchdata( "gameLength", var_3 );
-    maps\mp\gametypes\_playerlogic::printpredictedspawnpointcorrectness();
+	setomnvar("ui_pause_menu_show", 0);
+	game["state"] = "postgame";
+	setdvar("ui_game_state", "postgame");
+	level.gameendtime = gettime();
+	level.gameended = 1;
+	level.ingraceperiod = 0;
+	level notify("game_ended", var_0);
+	maps\mp\_utility::levelflagset("game_over");
+	maps\mp\_utility::levelflagset("block_notifies");
+	common_scripts\utility::waitframe();
+	setgameendtime(0);
+	var_3 = getmatchdata("gameLength");
+	var_3 += int(maps\mp\_utility::getsecondspassed());
+	setmatchdata("gameLength", var_3);
+	maps\mp\gametypes\_playerlogic::printpredictedspawnpointcorrectness();
 
-    if ( isdefined( var_0 ) && isstring( var_0 ) && var_0 == "overtime" )
-    {
-        level.finalkillcam_winner = "none";
-        endgameovertime( var_0, var_1 );
-        return;
-    }
-
-    if ( isdefined( var_0 ) && isstring( var_0 ) && var_0 == "halftime" )
-    {
-        level.finalkillcam_winner = "none";
-        endgamehalftime();
-        return;
-    }
-
-    if ( isdefined( level.finalkillcam_winner ) )
-        level.finalkillcam_timegameended[level.finalkillcam_winner] = maps\mp\_utility::getsecondspassed();
-
-    game["roundsPlayed"]++;
-
-    if ( level.teambased )
-    {
-        if ( var_0 == "axis" || var_0 == "allies" )
-            game["roundsWon"][var_0]++;
-
-        maps\mp\gametypes\_gamescore::updateteamscore( "axis" );
-        maps\mp\gametypes\_gamescore::updateteamscore( "allies" );
-    }
-    else if ( isdefined( var_0 ) && isplayer( var_0 ) )
-        game["roundsWon"][var_0.guid]++;
-
-    maps\mp\gametypes\_gamescore::updateplacement();
-    rankedmatchupdates( var_0 );
-
-    foreach ( var_5 in level.players )
-    {
-        var_5 setclientdvar( "ui_opensummary", 1 );
-
-        if ( maps\mp\_utility::wasonlyround() || maps\mp\_utility::waslastround() )
-            var_5 maps\mp\killstreaks\_killstreaks::clearkillstreaks();
-    }
-
-    setdvar( "g_deadChat", 1 );
-    setdvar( "ui_allow_teamchange", 0 );
-    setdvar( "bg_compassShowEnemies", 0 );
-    freezeallplayers( 1.0, "cg_fovScale", 1 );
-
-    if ( !var_2 )
-        visionsetnaked( "mpOutro", 0.5 );
-
-    if ( !maps\mp\_utility::wasonlyround() && !var_2 )
-    {
-        displayroundend( var_0, var_1 );
-
-        if ( isdefined( level.finalkillcam_winner ) )
-        {
-            foreach ( var_5 in level.players )
-                var_5 notify( "reset_outcome" );
-
-            level notify( "game_cleanup" );
-            waittillfinalkillcamdone();
-        }
-
-        if ( !maps\mp\_utility::waslastround() )
-        {
-            maps\mp\_utility::levelflagclear( "block_notifies" );
-
-            if ( checkroundswitch() )
-                displayroundswitch();
-
-            foreach ( var_5 in level.players )
-                var_5.pers["stats"] = var_5.stats;
-
-            level notify( "restarting" );
-            game["state"] = "playing";
-            setdvar( "ui_game_state", "playing" );
-            map_restart( 1 );
-            return;
-        }
-
-        if ( !level.forcedend )
-            var_1 = updateroundendreasontext( var_0 );
-    }
-
-    if ( !isdefined( game["clientMatchDataDef"] ) )
-    {
-        game["clientMatchDataDef"] = "mp/clientmatchdata.def";
-        setclientmatchdatadef( game["clientMatchDataDef"] );
-    }
-
-    maps\mp\gametypes\_missions::roundend( var_0 );
-
-    if ( level.teambased && maps\mp\_utility::isroundbased() && level.gameended && !maps\mp\_utility::ismoddedroundgame() )
-    {
-        if ( game["roundsWon"]["allies"] == game["roundsWon"]["axis"] )
-            var_0 = "tie";
-        else if ( game["roundsWon"]["axis"] > game["roundsWon"]["allies"] )
-        {
-            level.finalkillcam_winner = "axis";
-            var_0 = "axis";
-        }
-        else
-        {
-            level.finalkillcam_winner = "allies";
-            var_0 = "allies";
-        }
-    }
-
-    victim = level.finalKillCam_victim[ level.finalkillcam_winner ];
-	attacker = level.finalKillCam_attacker[ level.finalkillcam_winner ];
-
-    // --------------------------------------------------------------------------------------------------------------
-    wait 2;
-    killcamExist = 1;
-    if( !IsDefined( victim ) || 
-		!IsDefined( attacker ) )
+	if (isdefined(var_0) && isstring(var_0) && var_0 == "overtime")
 	{
-        killcamExist = 0;
-    }
+		level.finalkillcam_winner = "none";
+		endgameovertime(var_0, var_1);
+		return;
+	}
 
-    if ( killcamExist && isdefined( level.finalkillcam_winner ) && maps\mp\_utility::wasonlyround() )
-    {
-        displaygameend( var_0, var_1 );
-        foreach ( var_5 in level.players )
-            var_5 notify( "reset_outcome" );
+	if (isdefined(var_0) && isstring(var_0) && var_0 == "halftime")
+	{
+		level.finalkillcam_winner = "none";
+		endgamehalftime();
+		return;
+	}
 
-        level notify( "game_cleanup" );
-        waittillfinalkillcamdone(); 
-    }
+	if (isdefined(level.finalkillcam_winner))
+		level.finalkillcam_timegameended[level.finalkillcam_winner] = maps\mp\_utility::getsecondspassed();
 
+	game["roundsPlayed"]++;
 
-    maps\mp\_utility::levelflagclear( "block_notifies" );
-    
-    [[level.startmapvote]]();
-    if(!killcamExist)
-    {
-        displaygameend( var_0, var_1 );
-    }
-    // --------------------------------------------------------------------------------------------------------------
-    
-    level.intermission = 1;
-    level notify( "start_custom_ending" );
-    level notify( "spawning_intermission" );
+	if (level.teambased)
+	{
+		if (var_0 == "axis" || var_0 == "allies")
+			game["roundsWon"][var_0]++;
 
-    foreach ( var_5 in level.players )
-    {
-        var_5 notify( "reset_outcome" );
-        var_5 thread maps\mp\gametypes\_playerlogic::spawnintermission();
-    }
+		maps\mp\gametypes\_gamescore::updateteamscore("axis");
+		maps\mp\gametypes\_gamescore::updateteamscore("allies");
+	}
+	else if (isdefined(var_0) && isplayer(var_0))
+		game["roundsWon"][var_0.guid]++;
 
-    processlobbydata();
-    wait 1.0;
-    checkforpersonalbests();
+	maps\mp\gametypes\_gamescore::updateplacement();
+	rankedmatchupdates(var_0);
 
-    if ( level.teambased )
-    {
-        if ( var_0 == "axis" || var_0 == "allies" )
-            setmatchdata( "victor", var_0 );
-        else
-            setmatchdata( "victor", "none" );
+	foreach (var_5 in level.players)
+	{
+		var_5 setclientdvar("ui_opensummary", 1);
 
-        setmatchdata( "alliesScore", getteamscore( "allies" ) );
-        setmatchdata( "axisScore", getteamscore( "axis" ) );
-    }
-    else
-        setmatchdata( "victor", "none" );
+		if (maps\mp\_utility::wasonlyround() || maps\mp\_utility::waslastround())
+			var_5 maps\mp\killstreaks\_killstreaks::clearkillstreaks();
+	}
 
-    foreach ( var_5 in level.players )
-    {
-        var_5 setcommonplayerdata( "round", "endReasonTextIndex", var_1 );
+	setdvar("g_deadChat", 1);
+	setdvar("ui_allow_teamchange", 0);
+	setdvar("bg_compassShowEnemies", 0);
+	freezeallplayers(1.0, "cg_fovScale", 1);
 
-        if ( var_5 maps\mp\_utility::rankingenabled() && !maps\mp\_utility::is_aliens() )
-            var_5 maps\mp\_matchdata::logfinalstats();
-    
-    }
+	if (!var_2)
+		visionsetnaked("mpOutro", 0.5);
 
-    setmatchdata( "host", level.hostname );
+	if (!maps\mp\_utility::wasonlyround() && !var_2)
+	{
+		displayroundend(var_0, var_1);
 
-    if ( maps\mp\_utility::matchmakinggame() )
-    {
-        setmatchdata( "playlistVersion", getplaylistversion() );
-        setmatchdata( "playlistID", getplaylistid() );
-        setmatchdata( "isDedicated", isdedicatedserver() );
-    }
+		if (isdefined(level.finalkillcam_winner))
+		{
+			foreach (var_5 in level.players)
+				var_5 notify("reset_outcome");
 
-    sendmatchdata();
+			level notify("game_cleanup");
+			waittillfinalkillcamdone();
+		}
 
-    foreach ( var_5 in level.players )
-        var_5.pers["stats"] = var_5.stats;
+		if (!maps\mp\_utility::waslastround())
+		{
+			maps\mp\_utility::levelflagclear("block_notifies");
 
-    if ( !var_2 && !level.postgamenotifies )
-    {
-        if ( !maps\mp\_utility::wasonlyround() )
-            wait 6.0;
-        else
-            wait(min( 10.0, 4.0 + level.postgamenotifies ));
-    }
-    else
-        wait(min( 10.0, 4.0 + level.postgamenotifies ));
+			if (checkroundswitch())
+				displayroundswitch();
 
-    maps\mp\_utility::levelflagwaitopen( "post_game_level_event_active" );
+			foreach (var_5 in level.players)
+				var_5.pers["stats"] = var_5.stats;
 
-    setnojipscore( 0 );
-    setnojiptime( 0 );
-    level notify( "exitLevel_called" );
-    exitlevel( 0 );
+			level notify("restarting");
+			game["state"] = "playing";
+			setdvar("ui_game_state", "playing");
+			map_restart(1);
+			return;
+		}
+
+		if (!level.forcedend)
+			var_1 = updateroundendreasontext(var_0);
+	}
+
+	if (!isdefined(game["clientMatchDataDef"]))
+	{
+		game["clientMatchDataDef"] = "mp/clientmatchdata.def";
+		setclientmatchdatadef(game["clientMatchDataDef"]);
+	}
+
+	maps\mp\gametypes\_missions::roundend(var_0);
+
+	if (level.teambased && maps\mp\_utility::isroundbased() && level.gameended && !maps\mp\_utility::ismoddedroundgame())
+	{
+		if (game["roundsWon"]["allies"] == game["roundsWon"]["axis"])
+			var_0 = "tie";
+		else if (game["roundsWon"]["axis"] > game["roundsWon"]["allies"])
+		{
+			level.finalkillcam_winner = "axis";
+			var_0 = "axis";
+		}
+		else
+		{
+			level.finalkillcam_winner = "allies";
+			var_0 = "allies";
+		}
+	}
+
+	victim = level.finalKillCam_victim[level.finalkillcam_winner];
+	attacker = level.finalKillCam_attacker[level.finalkillcam_winner];
+
+	// --------------------------------------------------------------------------------------------------------------
+	wait 2;
+	killcamExist = 1;
+	if (!IsDefined(victim) ||
+		!IsDefined(attacker))
+	{
+		killcamExist = 0;
+	}
+
+	if (killcamExist && isdefined(level.finalkillcam_winner) && maps\mp\_utility::wasonlyround())
+	{
+		displaygameend(var_0, var_1);
+		foreach (var_5 in level.players)
+			var_5 notify("reset_outcome");
+
+		level notify("game_cleanup");
+		waittillfinalkillcamdone();
+	}
+
+	maps\mp\_utility::levelflagclear("block_notifies");
+
+	[[level.startmapvote]] ();
+	if (!killcamExist)
+	{
+		displaygameend(var_0, var_1);
+	}
+	// --------------------------------------------------------------------------------------------------------------
+
+	level.intermission = 1;
+	level notify("start_custom_ending");
+	level notify("spawning_intermission");
+
+	foreach (var_5 in level.players)
+	{
+		var_5 notify("reset_outcome");
+		var_5 thread maps\mp\gametypes\_playerlogic::spawnintermission();
+	}
+
+	processlobbydata();
+	wait 1.0;
+	checkforpersonalbests();
+
+	if (level.teambased)
+	{
+		if (var_0 == "axis" || var_0 == "allies")
+			setmatchdata("victor", var_0);
+		else
+			setmatchdata("victor", "none");
+
+		setmatchdata("alliesScore", getteamscore("allies"));
+		setmatchdata("axisScore", getteamscore("axis"));
+	}
+	else
+		setmatchdata("victor", "none");
+
+	foreach (var_5 in level.players)
+	{
+		var_5 setcommonplayerdata("round", "endReasonTextIndex", var_1);
+
+		if (var_5 maps\mp\_utility::rankingenabled() && !maps\mp\_utility::is_aliens())
+			var_5 maps\mp\_matchdata::logfinalstats();
+	}
+
+	setmatchdata("host", level.hostname);
+
+	if (maps\mp\_utility::matchmakinggame())
+	{
+		setmatchdata("playlistVersion", getplaylistversion());
+		setmatchdata("playlistID", getplaylistid());
+		setmatchdata("isDedicated", isdedicatedserver());
+	}
+
+	sendmatchdata();
+
+	foreach (var_5 in level.players)
+		var_5.pers["stats"] = var_5.stats;
+
+	if (!var_2 && !level.postgamenotifies)
+	{
+		if (!maps\mp\_utility::wasonlyround())
+			wait 6.0;
+		else
+			wait(min(10.0, 4.0 + level.postgamenotifies));
+	}
+	else
+		wait(min(10.0, 4.0 + level.postgamenotifies));
+
+	maps\mp\_utility::levelflagwaitopen("post_game_level_event_active");
+
+	setnojipscore(0);
+	setnojiptime(0);
+	level notify("exitLevel_called");
+	exitlevel(0);
 }
-
 
 // Utils
 
-maptoname( mapid) 
+maptoname(mapid)
 {
-    mapid = tolower(mapid);
-    if(mapid == "mp_prisonbreak") return "Prision Break";
-    if(mapid == "mp_dart") return "Octane";
-    if(mapid == "mp_lonestar") return "Tremor";
-    if(mapid == "mp_frag") return "Freight";
-    if(mapid == "mp_snow") return "Whiteout";
-    if(mapid == "mp_fahrenheit") return "Stormfront";
-    if(mapid == "mp_hashima") return "Siege";
-    if(mapid == "mp_warhawk") return "Warhawk";
-    if(mapid == "mp_sovereign") return "Sovereign";
-    if(mapid == "mp_zebra") return "Overload";
-    if(mapid == "mp_skeleton") return "Stonehaven";
-    if(mapid == "mp_chasm") return "Chasm";
-    if(mapid == "mp_flooded") return "Flooded";
-    if(mapid == "mp_strikezone") return "Strikezone";
-    if(mapid == "mp_descent_new") return "Free Fall";
-   
-    if(mapid == "mp_dome_ns") return "Unearthed";
-    if(mapid == "mp_ca_impact") return "Collision";
-    if(mapid == "mp_ca_behemoth") return "Behemoth";
-    if(mapid == "mp_battery3") return "Ruins";
+	mapid = tolower(mapid);
+	if (mapid == "mp_prisonbreak")
+		return "Prision Break";
+	if (mapid == "mp_dart")
+		return "Octane";
+	if (mapid == "mp_lonestar")
+		return "Tremor";
+	if (mapid == "mp_frag")
+		return "Freight";
+	if (mapid == "mp_snow")
+		return "Whiteout";
+	if (mapid == "mp_fahrenheit")
+		return "Stormfront";
+	if (mapid == "mp_hashima")
+		return "Siege";
+	if (mapid == "mp_warhawk")
+		return "Warhawk";
+	if (mapid == "mp_sovereign")
+		return "Sovereign";
+	if (mapid == "mp_zebra")
+		return "Overload";
+	if (mapid == "mp_skeleton")
+		return "Stonehaven";
+	if (mapid == "mp_chasm")
+		return "Chasm";
+	if (mapid == "mp_flooded")
+		return "Flooded";
+	if (mapid == "mp_strikezone")
+		return "Strikezone";
+	if (mapid == "mp_descent_new")
+		return "Free Fall";
 
-    if(mapid == "mp_dig") return "Pharaoh";
-    if(mapid == "mp_favela_iw6") return "Favela";
-    if(mapid == "mp_pirate") return "Mutiny";
-    if(mapid == "mp_zulu") return "Departed";
+	if (mapid == "mp_dome_ns")
+		return "Unearthed";
+	if (mapid == "mp_ca_impact")
+		return "Collision";
+	if (mapid == "mp_ca_behemoth")
+		return "Behemoth";
+	if (mapid == "mp_battery3")
+		return "Ruins";
 
-    if(mapid == "mp_conflict") return "Dynasty";
-    if(mapid == "mp_mine") return "Goldrush";
-    if(mapid == "mp_shipment_ns") return "Showtime";
-    if(mapid == "mp_zerosub") return "Subzero";
+	if (mapid == "mp_dig")
+		return "Pharaoh";
+	if (mapid == "mp_favela_iw6")
+		return "Favela";
+	if (mapid == "mp_pirate")
+		return "Mutiny";
+	if (mapid == "mp_zulu")
+		return "Departed";
 
-    if(mapid == "mp_boneyard_ns") return "Ignition";
-    if(mapid == "mp_ca_red_river") return "Containment";
-    if(mapid == "mp_ca_rumble") return "Bayview";
-    if(mapid == "mp_swamp") return "Fog";
-    
-    return mapid;
+	if (mapid == "mp_conflict")
+		return "Dynasty";
+	if (mapid == "mp_mine")
+		return "Goldrush";
+	if (mapid == "mp_shipment_ns")
+		return "Showtime";
+	if (mapid == "mp_zerosub")
+		return "Subzero";
+
+	if (mapid == "mp_boneyard_ns")
+		return "Ignition";
+	if (mapid == "mp_ca_red_river")
+		return "Containment";
+	if (mapid == "mp_ca_rumble")
+		return "Bayview";
+	if (mapid == "mp_swamp")
+		return "Fog";
+
+	return mapid;
 }
 
-maptoname( mapid ) 
+maptoname(mapid)
 {
-    mapid = tolower(mapid);
-    if(mapid == "mp_prisonbreak") return "Prision Break";
-    if(mapid == "mp_dart") return "Octane";
-    if(mapid == "mp_lonestar") return "Tremor";
-    if(mapid == "mp_frag") return "Freight";
-    if(mapid == "mp_snow") return "Whiteout";
-    if(mapid == "mp_fahrenheit") return "Stormfront";
-    if(mapid == "mp_hashima") return "Siege";
-    if(mapid == "mp_warhawk") return "Warhawk";
-    if(mapid == "mp_sovereign") return "Sovereign";
-    if(mapid == "mp_zebra") return "Overload";
-    if(mapid == "mp_skeleton") return "Stonehaven";
-    if(mapid == "mp_chasm") return "Chasm";
-    if(mapid == "mp_flooded") return "Flooded";
-    if(mapid == "mp_strikezone") return "Strikezone";
-    if(mapid == "mp_descent_new") return "Free Fall";
-   
-    if(mapid == "mp_dome_ns") return "Unearthed";
-    if(mapid == "mp_ca_impact") return "Collision";
-    if(mapid == "mp_ca_behemoth") return "Behemoth";
-    if(mapid == "mp_battery3") return "Ruins";
+	mapid = tolower(mapid);
+	if (mapid == "mp_prisonbreak")
+		return "Prision Break";
+	if (mapid == "mp_dart")
+		return "Octane";
+	if (mapid == "mp_lonestar")
+		return "Tremor";
+	if (mapid == "mp_frag")
+		return "Freight";
+	if (mapid == "mp_snow")
+		return "Whiteout";
+	if (mapid == "mp_fahrenheit")
+		return "Stormfront";
+	if (mapid == "mp_hashima")
+		return "Siege";
+	if (mapid == "mp_warhawk")
+		return "Warhawk";
+	if (mapid == "mp_sovereign")
+		return "Sovereign";
+	if (mapid == "mp_zebra")
+		return "Overload";
+	if (mapid == "mp_skeleton")
+		return "Stonehaven";
+	if (mapid == "mp_chasm")
+		return "Chasm";
+	if (mapid == "mp_flooded")
+		return "Flooded";
+	if (mapid == "mp_strikezone")
+		return "Strikezone";
+	if (mapid == "mp_descent_new")
+		return "Free Fall";
 
-    if(mapid == "mp_dig") return "Pharaoh";
-    if(mapid == "mp_favela_iw6") return "Favela";
-    if(mapid == "mp_pirate") return "Mutiny";
-    if(mapid == "mp_zulu") return "Departed";
+	if (mapid == "mp_dome_ns")
+		return "Unearthed";
+	if (mapid == "mp_ca_impact")
+		return "Collision";
+	if (mapid == "mp_ca_behemoth")
+		return "Behemoth";
+	if (mapid == "mp_battery3")
+		return "Ruins";
 
-    if(mapid == "mp_conflict") return "Dynasty";
-    if(mapid == "mp_mine") return "Goldrush";
-    if(mapid == "mp_shipment_ns") return "Showtime";
-    if(mapid == "mp_zerosub") return "Subzero";
+	if (mapid == "mp_dig")
+		return "Pharaoh";
+	if (mapid == "mp_favela_iw6")
+		return "Favela";
+	if (mapid == "mp_pirate")
+		return "Mutiny";
+	if (mapid == "mp_zulu")
+		return "Departed";
 
-    if(mapid == "mp_boneyard_ns") return "Ignition";
-    if(mapid == "mp_ca_red_river") return "Containment";
-    if(mapid == "mp_ca_rumble") return "Bayview";
-    if(mapid == "mp_swamp") return "Fog";
-    
-    return mapid;
+	if (mapid == "mp_conflict")
+		return "Dynasty";
+	if (mapid == "mp_mine")
+		return "Goldrush";
+	if (mapid == "mp_shipment_ns")
+		return "Showtime";
+	if (mapid == "mp_zerosub")
+		return "Subzero";
+
+	if (mapid == "mp_boneyard_ns")
+		return "Ignition";
+	if (mapid == "mp_ca_red_river")
+		return "Containment";
+	if (mapid == "mp_ca_rumble")
+		return "Bayview";
+	if (mapid == "mp_swamp")
+		return "Fog";
+
+	return mapid;
 }
 SetDvarIfNotInizialized(dvar, value)
 {
@@ -814,7 +870,6 @@ gametypeToName(gametype)
 
 	case "shrp":
 		return "Sharpshooter";
-
 	}
 	return "invalid";
 }
@@ -871,7 +926,6 @@ GetColor(color)
 
 	case "white":
 		return (1, 1, 1);
-
 	}
 }
 CreateString(input, font, fontScale, align, relative, x, y, color, alpha, glowColor, glowAlpha, sort, isLevel)
@@ -881,15 +935,15 @@ CreateString(input, font, fontScale, align, relative, x, y, color, alpha, glowCo
 	else
 		hud = level createServerFontString(font, fontScale);
 
-    hud setText(input);
+	hud setText(input);
 
-    hud.x = x;
-    hud.y = y;
-    hud.align = align;
-    hud.horzalign = align;
-    hud.vertalign = relative;
+	hud.x = x;
+	hud.y = y;
+	hud.align = align;
+	hud.horzalign = align;
+	hud.vertalign = relative;
 
-    hud setPoint(align, relative, x, y);
+	hud setPoint(align, relative, x, y);
 
 	hud.color = color;
 	hud.alpha = alpha;
@@ -903,7 +957,7 @@ CreateString(input, font, fontScale, align, relative, x, y, color, alpha, glowCo
 }
 CreateRectangle(align, relative, x, y, width, height, color, shader, sort, alpha, islevel)
 {
-    if(isDefined(isLevel))
+	if (isDefined(isLevel))
 		boxElem = newhudelem();
 	else
 		boxElem = newclienthudelem(self);
@@ -912,8 +966,8 @@ CreateRectangle(align, relative, x, y, width, height, color, shader, sort, alpha
 	boxElem.height = height;
 	boxElem.align = align;
 	boxElem.relative = relative;
-    boxElem.horzalign = align;
-    boxElem.vertalign = relative;
+	boxElem.horzalign = align;
+	boxElem.vertalign = relative;
 	boxElem.xOffset = 0;
 	boxElem.yOffset = 0;
 	boxElem.children = [];
