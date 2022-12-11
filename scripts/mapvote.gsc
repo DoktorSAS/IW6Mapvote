@@ -337,10 +337,11 @@ mv_SetRotation(mapid, gametype)
 	str = "";
 	if (array.size > 1)
 	{
-		str = "exec " + array[1];
+		str = "gametype " + array[1];
 	}
 	logPrint("mapvote//gametype//" + array[0] + "//executing//" + str + "\n");
 	setdvar("g_gametype", array[0]);
+	setdvar("sv_currentmaprotation", str + " map " + mapid);
 	setdvar("sv_maprotationcurrent", str + " map " + mapid);
 	setdvar("sv_maprotation", str + " map " + mapid);
 	level notify("mv_ended");
