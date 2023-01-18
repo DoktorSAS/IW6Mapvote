@@ -439,7 +439,7 @@ main()
 	// replacefunc( getfunction("maps/mp/gametypes/_gamelogic", "endgame_regularmp"), ::stub_endgame_regularmp);
 }
 
-endstub_endgame_regularmpgame_regularmp(var_0, var_1, var_2)
+stub_endgame_regularmp(var_0, var_1, var_2)
 {
 	if (!isdefined(var_2))
 		var_2 = 0;
