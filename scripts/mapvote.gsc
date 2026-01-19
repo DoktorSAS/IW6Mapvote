@@ -127,7 +127,7 @@ mv_GetRandomMaps(mapsIDs) // Select random map from the list
 	{
 		index = randomIntRange(0, mapsIDs.size);
 		map = mapsIDs[index];
-		mapsIDs = ArrayRemoveIndex(mapsIDs, map);
+		mapsIDs = ArrayRemoveIndex(mapsIDs, index); // P.S: Jombolio, great point, thanks for pointing that out.
 		mapschoosed[i] = map;
 	}
 
@@ -1039,3 +1039,4 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
