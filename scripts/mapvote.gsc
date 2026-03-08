@@ -338,7 +338,7 @@ mv_SetRotation(mapid, gametype)
 	str = "";
 	if (array.size > 1)
 	{
-		str = "gametype " + array[1];
+		str = "gametype " + array[0];
 	}
 	logPrint("mapvote//gametype//" + array[0] + "//executing//" + str + "\n");
 	setdvar("g_gametype", array[0]);
@@ -968,6 +968,7 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
 
 
 
