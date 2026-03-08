@@ -56,7 +56,8 @@ mv_Config()
 	SetDvarIfNotInizialized("mv_scrollcolor", "cyan");
 	SetDvarIfNotInizialized("mv_selectcolor", "lightgreen");
 	SetDvarIfNotInizialized("mv_backgroundcolor", "grey");
-	SetDvarIfNotInizialized("mv_gametypes", "dm;dm.cfg tdm;tdm.cfg dm;dm.cfg tdm;tdm.cfg sd;sd.cfg sd;sd.cfg");
+	// See server.cfg for other gametypes
+	SetDvarIfNotInizialized("mv_gametypes", "dm;dm.cfg war;war.cfg dm;dm.cfg war;war.cfg sd;sd.cfg sd;sd.cfg");
 	setDvarIfNotInizialized("mv_excludedmaps", "");
 }
 
@@ -967,5 +968,6 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
 
 
