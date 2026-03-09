@@ -744,6 +744,17 @@ maptoname(mapid)
 	return mapid;
 }
 
+SetDvarIfNotInizialized(dvar, value)
+{
+	if (!IsInizialized(dvar))
+		setDvar(dvar, value);
+}
+IsInizialized(dvar)
+{
+	result = getDvar(dvar);
+	return result != "";
+}
+
 gametypeToName(gametype)
 {
 	switch (tolower(gametype))
@@ -965,6 +976,7 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
 
 
 
