@@ -57,7 +57,7 @@ mv_Config()
 	SetDvarIfNotInizialized("mv_selectcolor", "lightgreen");
 	SetDvarIfNotInizialized("mv_backgroundcolor", "grey");
 	// See server.cfg for other gametypes
-	SetDvarIfNotInizialized("mv_gametypes", "dm;dm.cfg war;war.cfg dm;dm.cfg war;war.cfg sd;sd.cfg sd;sd.cfg");
+	SetDvarIfNotInizialized("mv_gametypes", "dm war sd");
 	setDvarIfNotInizialized("mv_excludedmaps", "");
 }
 
@@ -335,12 +335,12 @@ mv_GetMostVotedMap(votes)
 mv_SetRotation(mapid, gametype)
 {
 	array = strTok(gametype, ";");
-	str = "";
+	str = "gametype " + array[0];
 	if (array.size > 1)
 	{
-		str = "gametype " + array[0];
+		str = "gametype " + array[1];
 	}
-	logPrint("mapvote//gametype//" + array[0] + "//executing//" + str + "\n");
+	logPrint("mapvote//gametype//" + str + "//executing//" + mapid + "\n");
 	setdvar("g_gametype", array[0]);
 	setdvar("sv_currentmaprotation", str + " map " + mapid);
 	setdvar("sv_maprotationcurrent", str + " map " + mapid);
@@ -968,6 +968,7 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
 
 
 
