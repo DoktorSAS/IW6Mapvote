@@ -744,62 +744,59 @@ maptoname(mapid)
 	return mapid;
 }
 
-SetDvarIfNotInizialized(dvar, value)
-{
-	if (!IsInizialized(dvar))
-		setDvar(dvar, value);
-}
-IsInizialized(dvar)
-{
-	result = getDvar(dvar);
-	return result != "";
-}
-
 gametypeToName(gametype)
 {
 	switch (tolower(gametype))
 	{
-	case "dm":
-		return "Free for all";
-
-	case "tdm":
-		return "Team Deathmatch";
-
-	case "sd":
-		return "Search & Destroy";
+				
+	case "blitz":
+		return "Blitz";
 
 	case "conf":
 		return "Kill Confirmed";
 
-	case "ctf":
-		return "Capture the Flag";
-
+	case "cranked":
+		return "Cranked";
+	
+	case "dm":
+		return "Free for all";
+	
 	case "dom":
 		return "Domination";
+	
+	case "grind":
+		return "Grind";
 
-	case "dem":
-		return "Demolition";
+	case "grnd":
+		return "Drop Zone";
 
 	case "gun":
 		return "Gun Game";
 
-	case "hq":
-		return "Headquaters";
+	case "horde":
+		return "Safeguard";
 
-	case "koth":
-		return "Hardpoint";
+	case "infect":
+		return "Infected";
+	
+	case "sd":
+		return "Search & Destroy";
+	
+	case "siege":
+		return "Reinforce";
 
-	case "oic":
-		return "One in the chamber";
+	// was hunted a certain dlc map only?
+	case "sotf":
+		return "Hunted";
 
-	case "oneflag":
-		return "One-Flag CTF";
+	case "hunted FFA":
+		return "";
 
-	case "sas":
-		return "Sticks & Stones";
+	case "sr":
+		return "Search & Rescue";
 
-	case "shrp":
-		return "Sharpshooter";
+	case "war":
+		return "Team Deathmatch";
 	}
 	return "invalid";
 }
@@ -968,6 +965,7 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
 
 
 
