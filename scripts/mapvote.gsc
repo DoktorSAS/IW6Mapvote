@@ -56,7 +56,8 @@ mv_Config()
 	SetDvarIfNotInizialized("mv_scrollcolor", "cyan");
 	SetDvarIfNotInizialized("mv_selectcolor", "lightgreen");
 	SetDvarIfNotInizialized("mv_backgroundcolor", "grey");
-	SetDvarIfNotInizialized("mv_gametypes", "dm;dm.cfg tdm;tdm.cfg dm;dm.cfg tdm;tdm.cfg sd;sd.cfg sd;sd.cfg");
+	// See server.cfg for other gametypes
+	SetDvarIfNotInizialized("mv_gametypes", "dm war sd");
 	setDvarIfNotInizialized("mv_excludedmaps", "");
 }
 
@@ -334,12 +335,12 @@ mv_GetMostVotedMap(votes)
 mv_SetRotation(mapid, gametype)
 {
 	array = strTok(gametype, ";");
-	str = "";
+	str = "gametype " + array[0];
 	if (array.size > 1)
 	{
 		str = "gametype " + array[1];
 	}
-	logPrint("mapvote//gametype//" + array[0] + "//executing//" + str + "\n");
+	logPrint("mapvote//gametype//" + str + "//executing//" + mapid + "\n");
 	setdvar("g_gametype", array[0]);
 	setdvar("sv_currentmaprotation", str + " map " + mapid);
 	setdvar("sv_maprotationcurrent", str + " map " + mapid);
@@ -743,78 +744,6 @@ maptoname(mapid)
 	return mapid;
 }
 
-maptoname(mapid)
-{
-	mapid = tolower(mapid);
-	if (mapid == "mp_prisonbreak")
-		return "Prision Break";
-	if (mapid == "mp_dart")
-		return "Octane";
-	if (mapid == "mp_lonestar")
-		return "Tremor";
-	if (mapid == "mp_frag")
-		return "Freight";
-	if (mapid == "mp_snow")
-		return "Whiteout";
-	if (mapid == "mp_fahrenheit")
-		return "Stormfront";
-	if (mapid == "mp_hashima")
-		return "Siege";
-	if (mapid == "mp_warhawk")
-		return "Warhawk";
-	if (mapid == "mp_sovereign")
-		return "Sovereign";
-	if (mapid == "mp_zebra")
-		return "Overload";
-	if (mapid == "mp_skeleton")
-		return "Stonehaven";
-	if (mapid == "mp_chasm")
-		return "Chasm";
-	if (mapid == "mp_flooded")
-		return "Flooded";
-	if (mapid == "mp_strikezone")
-		return "Strikezone";
-	if (mapid == "mp_descent_new")
-		return "Free Fall";
-
-	if (mapid == "mp_dome_ns")
-		return "Unearthed";
-	if (mapid == "mp_ca_impact")
-		return "Collision";
-	if (mapid == "mp_ca_behemoth")
-		return "Behemoth";
-	if (mapid == "mp_battery3")
-		return "Ruins";
-
-	if (mapid == "mp_dig")
-		return "Pharaoh";
-	if (mapid == "mp_favela_iw6")
-		return "Favela";
-	if (mapid == "mp_pirate")
-		return "Mutiny";
-	if (mapid == "mp_zulu")
-		return "Departed";
-
-	if (mapid == "mp_conflict")
-		return "Dynasty";
-	if (mapid == "mp_mine")
-		return "Goldrush";
-	if (mapid == "mp_shipment_ns")
-		return "Showtime";
-	if (mapid == "mp_zerosub")
-		return "Subzero";
-
-	if (mapid == "mp_boneyard_ns")
-		return "Ignition";
-	if (mapid == "mp_ca_red_river")
-		return "Containment";
-	if (mapid == "mp_ca_rumble")
-		return "Bayview";
-	if (mapid == "mp_swamp")
-		return "Fog";
-
-	return mapid;
-}
 SetDvarIfNotInizialized(dvar, value)
 {
 	if (!IsInizialized(dvar))
@@ -830,47 +759,55 @@ gametypeToName(gametype)
 {
 	switch (tolower(gametype))
 	{
-	case "dm":
-		return "Free for all";
-
-	case "tdm":
-		return "Team Deathmatch";
-
-	case "sd":
-		return "Search & Destroy";
+				
+	case "blitz":
+		return "Blitz";
 
 	case "conf":
 		return "Kill Confirmed";
 
-	case "ctf":
-		return "Capture the Flag";
-
+	case "cranked":
+		return "Cranked";
+	
+	case "dm":
+		return "Free for all";
+	
 	case "dom":
 		return "Domination";
+	
+	case "grind":
+		return "Grind";
 
-	case "dem":
-		return "Demolition";
+	case "grnd":
+		return "Drop Zone";
 
 	case "gun":
 		return "Gun Game";
 
-	case "hq":
-		return "Headquaters";
+	case "horde":
+		return "Safeguard";
 
-	case "koth":
-		return "Hardpoint";
+	case "infect":
+		return "Infected";
+	
+	case "sd":
+		return "Search & Destroy";
+	
+	case "siege":
+		return "Reinforce";
 
-	case "oic":
-		return "One in the chamber";
+	// was hunted a certain dlc map only?
+	case "sotf":
+		return "Hunted";
 
-	case "oneflag":
-		return "One-Flag CTF";
+	case "hunted FFA":
+		return "";
 
-	case "sas":
-		return "Sticks & Stones";
+	case "sr":
+		return "Search & Rescue";
 
-	case "shrp":
-		return "Sharpshooter";
+	case "war":
+		return "Team Deathmatch";
 	}
 	return "invalid";
 }
@@ -1039,4 +976,10 @@ affectElement(type, time, value)
 	if (type == "color")
 		self.color = value;
 }
+
+
+
+
+
+
 
