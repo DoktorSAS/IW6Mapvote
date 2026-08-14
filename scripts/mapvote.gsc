@@ -495,22 +495,66 @@ spawnintermission()
 
 	if(maps\mp\_utility::waslastround() && !isDefined(level.mapvote_started))
 	{
-		maps\mp\_utility::levelflagclear( "block_notifies" );
-		setdvar( "ui_game_state", "" );
+		if (isDefined(level.finalkillcam_winner))
+		{
+			victim = level.finalKillCam_victim[level.finalkillcam_winner];
+			attacker = level.finalKillCam_attacker[level.finalkillcam_winner];
+			if ( !isdefined( victim ) || !isdefined( attacker ) )
+			{
+				maps\mp\_utility::levelflagclear( "block_notifies" );
+				setdvar( "ui_game_state", "" );
+				
+				self visionsetnakedforplayer( "mpOutro", 1 );
+				maps\mp\_utility::set_visionset_for_watching_players( "mpOutro", 1 );
+				self notify( "changing_visionset" );
+
+				foreach ( var_3 in level.players )
+					var_3 notify( "reset_outcome" );
+
+				level notify( "game_cleanup" );
+				game["status"] = "overtime";
+				level notify( "restarting" );
+				game["state"] = "playing";
+				self.forcespectatorclient = 1;
+				self allowspectateteam( "none", 1 );
+				origin = self.origin;
+				angles = self getPlayerAngles();
+				maps\mp\_utility::updatesessionstate( "dead" );
+        		maps\mp\_utility::clearkillcamstate();
+				self setorigin(origin);
+				self setplayerangles(angles);
+			}
+		}
+		else
+		{
+			maps\mp\_utility::levelflagclear( "block_notifies" );
+			setdvar( "ui_game_state", "" );
+			
+			self visionsetnakedforplayer( "mpOutro", 1 );
+			maps\mp\_utility::set_visionset_for_watching_players( "mpOutro", 1 );
+			self notify( "changing_visionset" );
+
+			foreach ( var_3 in level.players )
+				var_3 notify( "reset_outcome" );
+
+			level notify( "game_cleanup" );
+			game["status"] = "overtime";
+			level notify( "restarting" );
+			game["state"] = "playing";
+			self.forcespectatorclient = 1;
+			self allowspectateteam( "none", 1 );
+			maps\mp\_utility::updatesessionstate( "dead" );
+        	maps\mp\_utility::clearkillcamstate();
+			origin = self.origin;
+			angles = self getPlayerAngles();
+			maps\mp\_utility::updatesessionstate( "dead" );
+        	maps\mp\_utility::clearkillcamstate();
+			self setorigin(origin);
+			self setplayerangles(angles);
+		}
+
+		level notify("execute_mapvote");
 		
-		self visionsetnakedforplayer( "mpOutro", 1 );
-    	maps\mp\_utility::set_visionset_for_watching_players( "mpOutro", 1 );
-        self notify( "changing_visionset" );
-
-		foreach ( var_3 in level.players )
-            var_3 notify( "reset_outcome" );
-
-        level notify( "game_cleanup" );
-		game["status"] = "overtime";
-		level notify( "restarting" );
-		game["state"] = "playing";
-
-		level notify("execute_mapvote");	
 	}
 
     if ( !maps\mp\_utility::is_aliens() && level.rankedmatch && ( self.postgamepromotion || isdefined( var_0 ) && var_0 ) )
