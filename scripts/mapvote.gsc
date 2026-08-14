@@ -14,7 +14,7 @@
 
 	1.0.1 (in development):
 	- Code refractor
-	- New system
+	- New system to handle mapvote execution on end game
 */
 
 init()
@@ -478,9 +478,6 @@ FixBlur() // Patch blur effect
 
 main()
 {
-	//replacefunc( maps\mp\gametypes\_gamelogic::waittillfinalkillcamdone, ::waittillfinalkillcamdone);
-	//replacefunc( maps\mp\gametypes\_gamelogic::displayroundend, ::displayroundend);
-	//replacefunc( maps\mp\gametypes\_gamelogic::displaygameend, ::displaygameend);
 	replacefunc( maps\mp\gametypes\_playerlogic::spawnintermission, ::spawnintermission);
 	replacefunc( maps\mp\gametypes\_gamelogic::processlobbydata, ::processlobbydata);
 }
@@ -498,6 +495,21 @@ spawnintermission()
 
 	if(maps\mp\_utility::waslastround() && !isDefined(level.mapvote_started))
 	{
+		maps\mp\_utility::levelflagclear( "block_notifies" );
+		setdvar( "ui_game_state", "" );
+		
+		self visionsetnakedforplayer( "mpOutro", 1 );
+    	maps\mp\_utility::set_visionset_for_watching_players( "mpOutro", 1 );
+        self notify( "changing_visionset" );
+
+		foreach ( var_3 in level.players )
+            var_3 notify( "reset_outcome" );
+
+        level notify( "game_cleanup" );
+		game["status"] = "overtime";
+		level notify( "restarting" );
+		game["state"] = "playing";
+
 		level notify("execute_mapvote");	
 	}
 
